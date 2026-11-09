@@ -25,5 +25,4 @@ RUN mkdir -p /app/data
 # Mini App server port
 EXPOSE 8080
 
-CMD ["python", 
-"run.py"]
+CMD ["python", "run.py"]
