@@ -10,10 +10,12 @@ on:
 jobs:
   run-script:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Yeh line token ko file update/commit karne ki ijazat degi
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python 3.13
         uses: actions/setup-python@v5
