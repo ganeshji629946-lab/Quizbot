@@ -11,6 +11,21 @@ from telegram.ext import Application
 
 from . import admin, ai_quiz, mix, pdf_quiz, poll_quiz, quiz_play, reports, scheduling, setup_wizard, translation
 
+
+# Keep quiz deep links routed to the normal quiz handler, but give a bare
+# /start a short welcome response.
+_start_quiz = quiz_play.start_quiz
+
+
+async def _start_quiz_with_welcome(update, ctx) -> None:
+    if not ctx.args:
+        await update.message.reply_text("Welcome 🤗")
+        return
+    await _start_quiz(update, ctx)
+
+
+quiz_play.start_quiz = _start_quiz_with_welcome
+
 _MODULES = (
     quiz_play,     # /start, /pause, /resume, /stop, /leaderboard, /slow, /fast, /normal, poll answers
     setup_wizard,  # qs_* quiz-setup wizard callbacks
