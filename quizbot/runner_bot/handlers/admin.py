@@ -41,6 +41,11 @@ HELP_TEXT = (
 )
 
 
+async def pro_command(update: Update, ctx: ContextTypes.DEFAULT_TYPE) -> None:
+    """Reply to `/pro` with the current pro-status message."""
+    await update.effective_message.reply_text("Sorry 😞 you are not pro")
+
+
 async def help_command(update: Update, ctx: ContextTypes.DEFAULT_TYPE) -> None:
     """`/help` -- command reference."""
     await safe_send_message(ctx, update.effective_chat.id, HELP_TEXT, parse_mode=ParseMode.HTML)
@@ -130,4 +135,5 @@ async def watchdog_loop() -> None:
 
 def register(application: Application) -> None:
     application.add_handler(CommandHandler("help", help_command))
+    application.add_handler(CommandHandler("pro", pro_command))
     application.add_handler(MessageHandler(filters.COMMAND & filters.ChatType.CHANNEL, handle_channel_command))
